@@ -7,8 +7,9 @@
  */
 
 var app = require("../app").app;
+var exposeDb = require("../middleware/exposedb").exposeDb;
 
-app.get('/', function(req, res){
+app.get('/', exposeDb, function(req, res){
   var mongoDb = req.mongoDb;
   var expose = "";
   if(mongoDb){

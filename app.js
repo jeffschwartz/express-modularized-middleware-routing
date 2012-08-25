@@ -25,11 +25,7 @@ var server = new mongo.Server("localhost", 27017, serverOptions);
 // create mongo database
 var db = new mongo.Db("dbname", server, {});
 
-// route specific middleware - will expose the database to route
-var exposeDb = function(req, resp, next){
-  req.mongoDb = db;
-  next();
-};
+exports.db = db;
 
 var app = express(); //INFO! because of var the app variable is local to this module.
 
@@ -43,7 +39,6 @@ app.configure(function(){
   app.use(express.logger('dev'));
   app.use(express.bodyParser());
   app.use(express.methodOverride());
-  app.use(exposeDb);
   app.use(app.router);
   app.use(express.static(path.join(__dirname, 'public')));
 });
